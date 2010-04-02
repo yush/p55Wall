@@ -1,62 +1,52 @@
 class ObjHW {
-  //TODO: z buffer
   ControlP5 aController;
-  PGraphics ptrScreen;
+  public PGraphics ptrScreen;
   private PGraphics _backBuffer;  //backbuffer a remonter dans objet controlleur (a creer?)
   private int selectionWeight= 2;
   private int contourWeight= 10;
   
-  public boolean selected;
-  public ObjCir head;
-  public ObjArrow arrow;
-  public ObjCir queue;
-  public ObjLink aLink;
   public color objColor;
+  public boolean selected;
+  
+  public ObjTemplate head;
+  public ObjTemplate queue;
+  public ObjLink aLink;
+  
  
   ObjHW( ControlP5 tController, PGraphics aScreen, PGraphics aBackBuffer) {
     ptrScreen = aScreen;
     _backBuffer = aBackBuffer;
     aController = tController;
-    arrow = new ObjArrow(200,200,200,250,40,aController);
-    head = new ObjCir(200,200,50, aController);
-    queue = new ObjCir(200,250,20, aController);
-    aLink = new ObjLink(200,200,200,250,10);
+    head = new ObjCir(200,200,50, this, aController);
+    queue = new ObjArrow(200,200,40,this, aController);
+    aLink = new ObjLink(200,200,200,250,this, 10);
     objColor = color(255,220,0);
   }
   
   /*
   * Private
   */
+  //dessine un objet et fait bouger le lien si necessaire
   private void _drawObj(PGraphics aBuffer, int contourWeight, int typeBuffer) {
     if (head.selected) {
-      head.x = mouseX;
-      head.y = mouseY;
-      aLink.psrc1.x = mouseX;
-      aLink.psrc1.y = mouseY;
+      head.center.x = mouseX;
+      head.center.y = mouseY;
       aLink.processed = false;
-      arrow.p1.x = mouseX;
-      arrow.p1.y = mouseY;      
-      arrow.selected = false;
     }
     if (queue.selected) {
-      queue.x = mouseX;
-      queue.y = mouseY;
-      aLink.psrc2.x = mouseX;
-      aLink.psrc2.y = mouseY;
+      queue.center.x = mouseX;
+      queue.center.y = mouseY;
       aLink.processed = false;
     }
+
+    aLink.psrc1.x = head.center.x;
+    aLink.psrc1.y = head.center.y;   
+    aLink.psrc2.x = queue.center.x;
+    aLink.psrc2.y = queue.center.y;
     
-    if (arrow.selected) {
-      arrow.p2.x = mouseX;
-      arrow.p2.y = mouseY;
-      aLink.psrc2.x = mouseX;
-      aLink.psrc2.y = mouseY;
-      arrow.processed = false;
-    }
-    aLink.drawIt(aBuffer, contourWeight, typeBuffer);    
-    arrow.drawIt(aBuffer, contourWeight, typeBuffer);    
-    head.drawIt(aBuffer, contourWeight, typeBuffer);
-    //queue.drawIt(aBuffer, contourWeight, typeBuffer);
+    aLink.render();    
+    head.render();
+    queue.render();
   } 
   
   private boolean _isSelectedBackBuffer(int x, int y) {
@@ -73,10 +63,7 @@ class ObjHW {
       queue.selected = true;
       println("queue selected");
     }
-    if ( color(arrow.id) == res) {
-      arrow.selected = true;
-    }
-    selected = queue.selected | head.selected | arrow.selected;
+    selected = queue.selected | head.selected;
     return selected;
   }
 
@@ -92,6 +79,8 @@ class ObjHW {
   /*
   * Public
   */
+  
+
   
   public boolean isSelected(int clickX, int clickY) {
     return _isSelectedBackBuffer(mouseX, mouseY);
@@ -121,12 +110,11 @@ class ObjHW {
   public void setUnselected() {
     head.selected = false;
     queue.selected = false;
-    arrow.selected = false;
   }
   
   public void loadParametersUI() {
-     aController.controller("headRadius").setValue(head.radius);
-     aController.controller("queueRadius").setValue(queue.radius);
+     aController.controller("headRadius").setValue(head.getObjSize());
+     aController.controller("queueRadius").setValue(queue.getObjSize());
      aController.controller("red").setValue(red(objColor));
      aController.controller("green").setValue(green(objColor));
      aController.controller("blue").setValue(blue(objColor));
@@ -134,8 +122,8 @@ class ObjHW {
   
   public void xml(StringBuilder tStrXml) {
      tStrXml.append("<objHW id='test'>");
-     head.xml(tStrXml);
-     queue.xml(tStrXml);
+     head.toXml(tStrXml);
+     queue.toXml(tStrXml);
      tStrXml.append("</objHW>");
   }
   
