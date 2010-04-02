@@ -13,10 +13,6 @@
 
 import controlP5.*;
 import geomerative.*;
-/*
-import org.apache.batik.svggen.font.table.*;
-import org.apache.batik.svggen.font.*;
-*/
 
 ControlP5 controlP5;
 public boolean lPressed=false;

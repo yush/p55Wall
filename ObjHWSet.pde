@@ -20,18 +20,6 @@ class ObjHWSet {
 
   }
   
-  /*
-  public void draw() {
-    ObjHW anObj;
-    int i;
-    for(i=0; i < HWSet.HWList.size(); i++) {
-      anObj = (ObjHW)HWSet.HWList.get(i);
-      anObj.drawObj();
-      anObj.drawObjInBuffer();
-    } 
-  }
-  */
-  
   //dessiner tous les sous-objet pour recomposer ObjHW
   public void draw() {
     ObjTemplate anObj;
