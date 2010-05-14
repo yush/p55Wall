@@ -18,8 +18,8 @@ class ObjHW {
     _backBuffer = aBackBuffer;
     aController = tController;
     head = new ObjCir(200,200,50, this, aController);
-    queue = new ObjArrow(200,200,40,this, aController);
-    aLink = new ObjLink(200,200,200,250,this, 10);
+    queue = new ObjArrow(250,300,70,50,this, aController);
+    aLink = new ObjLink(200,200,250,300,this, 10);
     objColor = color(255,220,0);
   }
   

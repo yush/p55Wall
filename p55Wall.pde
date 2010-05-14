@@ -12,6 +12,7 @@
  */
 
 import controlP5.*;
+import geomerative.*;
 
 
 ControlP5 controlP5;
@@ -61,8 +62,8 @@ void createInterface(ControlP5 controller) {
 
 void setup() {
   CONTOUR_COLOR = color(0,0,0);
-  smooth();
-  size(800,400);
+  //smooth();
+  size(800,400, JAVA2D);
   frameRate(20);
   RG.init(this);
   controlP5 = new ControlP5(this);
