@@ -1,7 +1,7 @@
 class ObjCir extends ObjTemplate {
   int radius;
   boolean dragged=false;
-  private RShape shp1,shp2,shp3,shp4,shp5,shp6;
+  RShape shp1,shp2,shp3,shp4,shp5,shp6;
     
   /*
   * Constructeur

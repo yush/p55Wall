@@ -30,6 +30,11 @@ class ObjArrow extends ObjTemplate /*implements Comparable*/ {
       aBuffer.endDraw();
     }
   }
+  
+  private void _drawWithGeom()
+  {
+  
+  }
 
   private void _processCoord(PVector aP1, PVector aP2, int tSize) {
     PVector orthoVector, vSegment, aVector, arrowBase;
