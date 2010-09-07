@@ -12,16 +12,12 @@
  */
 
 import controlP5.*;
-import geomerative.*;
-
 
 ControlP5 controlP5;
 public boolean lPressed=false;
-public boolean lReleased=false;
-ObjHWSet HWSet;
+ArrayList HWList = new ArrayList();
 ObjHW selectedObj;
-PGraphics imageBuffer, backBuffer;
-color CONTOUR_COLOR;
+PGraphics backBuffer;
 
 void createInterface(ControlP5 controller) {
   ScrollList l;
@@ -60,40 +56,39 @@ void createInterface(ControlP5 controller) {
    controlP5.addSlider("hwZBuffer",-100,100,0,10,250,80,14).setId(7);
 }
 
+
 void setup() {
-  CONTOUR_COLOR = color(0,0,0);
-  //smooth();
-  size(800,400, JAVA2D);
-  frameRate(20);
-  RG.init(this);
+  smooth();
+  size(800,400);
   controlP5 = new ControlP5(this);
   createInterface(controlP5);
-  imageBuffer = this.g;
-  backBuffer = createGraphics(400,800,JAVA2D);   
-  HWSet = new ObjHWSet();
-  HWSet.add( new ObjHW(controlP5, this.g, backBuffer) );
+  backBuffer = createGraphics(400,400,JAVA2D); 
+  HWList.add( new ObjHW(controlP5, this.g, backBuffer) );
   stroke(0,0,0);
 }
 
 void draw() {
-  if (lReleased == false) {
-    println("draw");
-    background(100);
-    backBuffer.background(255);
-    HWSet.draw();
-    image(backBuffer, 400, 0);
+  ObjHW anObj;
+  int i;
+  background(100);
+  backBuffer.background(255);
+  //HWList.sort();
+  for(i=0; i < HWList.size(); i++) {
+    anObj = (ObjHW)HWList.get(i);
+    anObj.drawObj();
+    anObj.drawObjInBuffer();
   }
+  image(backBuffer, 400, 0);
 }
 
 void mousePressed() {
   ObjHW anObj;
   lPressed = true;
-  lReleased = false;
   println("mousePressedr");
   int i;
-  println("HWList size:"+HWSet.HWList.size() );
-  for (i =0; i < HWSet.HWList.size(); i++ ) {
-    anObj = (ObjHW)HWSet.HWList.get(i);
+  println("HWList size:"+HWList.size() );
+  for (i =0; i < HWList.size(); i++ ) {
+    anObj = (ObjHW)HWList.get(i);
     if ( anObj.isSelected(mouseX,mouseY) ) {
       println("selected & break");
       selectedObj = anObj;
@@ -109,13 +104,12 @@ void mouseReleased() {
   ObjHW anObj;
   int i=0;
   println("mouse released");
-  while (i < HWSet.HWList.size() ) {
-    anObj = (ObjHW)HWSet.HWList.get(i);
+  lPressed = false;
+  while (i < HWList.size() ) {
+    anObj = (ObjHW)HWList.get(i);
     anObj.setUnselected();
     i++;  
   }
-  lReleased = true;
-  lPressed = false;
 }
 
 public void controlEvent(ControlEvent theEvent) {
@@ -134,7 +128,7 @@ public void controlEvent(ControlEvent theEvent) {
         break;  
       case(2):
         println("add HWObj");
-        HWSet.add( new ObjHW(controlP5, this.g, backBuffer) );
+        HWList.add( new ObjHW(controlP5, this.g, backBuffer) );
         break;
       case(3):
         int redValue = (int)theEvent.controller().value();
@@ -149,8 +143,16 @@ public void controlEvent(ControlEvent theEvent) {
         selectedObj.objColor = color(red(selectedObj.objColor),green(selectedObj.objColor),blueValue);
         break;
       case(6):
-        HWSet.toXml();
-        break;        
+        StringBuilder aXml = new StringBuilder();
+        ObjHW anHWObj;
+        aXml.append("<HWList numObject=\""+HWList.size()+"\">");
+        for(int i=0; i<HWList.size(); i++) {
+          anHWObj = (ObjHW)HWList.get(i);
+          anHWObj.xml(aXml);
+        }
+        aXml.append("</HWList>");
+        println(aXml.toString());
+        break;
       case(7):
         selectedObj.queue.center.z = theEvent.controller().value();
         break;
@@ -168,10 +170,8 @@ public void controlEvent(ControlEvent theEvent) {
         break;
     }
   }
-  
   if (theEvent.isGroup() ) {
     println("from group");
   }
-  
 }
 

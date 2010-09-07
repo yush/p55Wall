@@ -1,7 +1,6 @@
 class ObjCir extends ObjTemplate {
   int radius;
   boolean dragged=false;
-  RShape shp1,shp2,shp3,shp4,shp5,shp6;
     
   /*
   * Constructeur
@@ -13,7 +12,6 @@ class ObjCir extends ObjTemplate {
     center.x = tX;
     center.y = tY;
     radius = tRad;
-    _initShape();
   }
   
   public ObjCir(ObjTemplate anObj) {
@@ -22,65 +20,26 @@ class ObjCir extends ObjTemplate {
     center.x = (int)anObj.center.x;
     center.y = (int)anObj.center.y;
     radius = anObj.getObjSize();
-    _initShape();
+  }
+  
+  public void setSelected(boolean tSelected) {
+    if ((selected == true)  && (selected != tSelected)) {
+      println("set selected radius:"+radius);
+      aController.controller("headRadius").setValue(radius); 
+    }
+    selected = tSelected; 
   }
   
   /*
   * Private
   */
-  
   private void _drawSelection(PGraphics aBuffer) {
     aBuffer.pushStyle();
     aBuffer.noFill();
     aBuffer.stroke(255,0,0);
     aBuffer.ellipse(center.x,center.y,radius,radius);
     aBuffer.popStyle();
-  }
-  
-  private void _draw(color tColor, int contour, PGraphics aBuffer) {
-    println("ObjCir.drawIt.buffer:"+aBuffer);
-    println("center.x:"+center.x);
-    println("contour:"+contour);
-    aBuffer.beginDraw();
-    aBuffer.fill(tColor);
-    aBuffer.ellipse(center.x,center.y,radius+contour,radius+contour);
-    aBuffer.endDraw();
-  }
-  
-  private void _initShape() {
-    //base
-    shp1 = RShape.createCircle(center.x, center.y, radius+ parent.contourWeight);
-    shp2 = RShape.createCircle(center.x, center.y, radius);
-    
-    //
-    shp3 = RShape.createRectangle(center.x-parent.contourWeight/2,center.y-parent.contourWeight/2,20,200);    
-    
-    //calcule
-    shp4 = RG.diff(shp1, shp2);
-    shp5 = RG.intersection(shp3, shp4);
-    shp6 = RG.union(shp2, shp5); 
-  }
-  
-  private void _drawWithGeom(PGraphics tImageBuffer) {
-    noStroke();    
-    fill(parent.objColor);
-    tImageBuffer.beginDraw();
-    tImageBuffer.fill(CONTOUR_COLOR);
-    shp1.draw(tImageBuffer);
-    tImageBuffer.fill(parent.objColor);
-    shp6.draw(tImageBuffer);
-    tImageBuffer.endDraw();
-  }
-  
-  private void _drawBufferWithGeom() {
-    noStroke();    
-    fill(color(id));
-    backBuffer.beginDraw();
-    backBuffer.fill(CONTOUR_COLOR);
-    shp1.draw(backBuffer);
-    backBuffer.endDraw();
-  }
- 
+  } 
   
   /*
   * PUBLIC
@@ -89,19 +48,14 @@ class ObjCir extends ObjTemplate {
   /*
   * dessine l'élement
   */
-  public void render() {
-    _drawWithGeom(imageBuffer);
-    _drawBufferWithGeom();
-  }
-  
-
-
-  public void setSelected(boolean tSelected) {
-    if ((selected == true)  && (selected != tSelected)) {
-      println("set selected radius:"+radius);
-      aController.controller("headRadius").setValue(radius); 
+  public void drawIt(PGraphics aBuffer, int contour, int typeBuffer){
+    if (typeBuffer ==  1) {
+      aBuffer.fill(color(id));
     }
-    selected = tSelected; 
+    aBuffer.beginDraw();
+    aBuffer.noStroke();
+    aBuffer.ellipse(center.x,center.y,radius+contour,radius+contour);
+    aBuffer.endDraw();
   }
   
   public void toXml(StringBuilder aSB) {

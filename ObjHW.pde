@@ -1,6 +1,7 @@
 class ObjHW {
+  //TODO: z buffer
   ControlP5 aController;
-  public PGraphics ptrScreen;
+  PGraphics ptrScreen;
   private PGraphics _backBuffer;  //backbuffer a remonter dans objet controlleur (a creer?)
   private int selectionWeight= 2;
   private int contourWeight= 10;
@@ -18,15 +19,15 @@ class ObjHW {
     _backBuffer = aBackBuffer;
     aController = tController;
     head = new ObjCir(200,200,50, this, aController);
-    queue = new ObjArrow(250,300,70,50,this, aController);
-    aLink = new ObjLink(200,200,250,300,this, 10);
+    queue = new ObjArrow(200,200,40,this, aController);
+    //queue = new ObjCir(200,250,20, this, aController);
+    aLink = new ObjLink(200,200,200,250,10);
     objColor = color(255,220,0);
   }
   
   /*
   * Private
   */
-  //dessine un objet et fait bouger le lien si necessaire
   private void _drawObj(PGraphics aBuffer, int contourWeight, int typeBuffer) {
     if (head.selected) {
       head.center.x = mouseX;
@@ -44,9 +45,9 @@ class ObjHW {
     aLink.psrc2.x = queue.center.x;
     aLink.psrc2.y = queue.center.y;
     
-    aLink.render();    
-    head.render();
-    queue.render();
+    aLink.drawIt(aBuffer, contourWeight, typeBuffer);    
+    head.drawIt(aBuffer, contourWeight, typeBuffer);
+    queue.drawIt(aBuffer, contourWeight, typeBuffer);
   } 
   
   private boolean _isSelectedBackBuffer(int x, int y) {
