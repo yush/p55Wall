@@ -5,12 +5,9 @@ class ObjLink extends ObjTemplate {
   boolean processed;
   boolean dragged;
   
-  private RShape shpMain;
-  
-  ObjLink(int tX1,int tY1,int tX2,int tY2,ObjHW tParent, int tWeight) {
+  ObjLink(int tX1,int tY1,int tX2,int tY2,int tWeight) {
     psrc1 = new PVector(tX1, tY1);
     psrc2 = new PVector(tX2, tY2);
-    parent = tParent;
     weight = tWeight; 
     processed=false;
   }
@@ -33,31 +30,16 @@ class ObjLink extends ObjTemplate {
     pf3 = PVector.add(pf4, vSegment);
     processed = true;
   }
-    
-  private void _draw(color tColor, int contour, PGraphics aBuffer) {
+  
+  public void drawIt(PGraphics aBuffer, int contour, int typeBuffer) {
+    aBuffer.pushStyle();
     processCoord(contour);  //TODO: ne recalculer que si necessaire, mais il faut calculer le contour, puis l'interieur
-    aBuffer.beginDraw();
-    aBuffer.fill(tColor);
+    if (typeBuffer ==  1) {
+      aBuffer.fill(color(id));
+    }
     aBuffer.quad(pf1.x, pf1.y, pf2.x, pf2.y, pf3.x, pf3.y, pf4.x, pf4.y);
-    aBuffer.endDraw();
+    aBuffer.popStyle();
   }
-  
-  private void _drawWithGeom() {
-    int tHeight;
-    //processCoord(contour);  //TODO: ne recalculer que si necessaire, mais il faut calculer le contour, puis l'interieur
-    //dessiner polygone
-    //shpMain = RShape.createRectangle();
-  }
-  
-  /*
-  * Public
-  */
-  
-  public void render() {
-    _draw(0, parent.contourWeight, parent.ptrScreen);
-    _draw(parent.objColor, 0, parent.ptrScreen); 
-  }
-
   
   public void setObjSize(int aSize) {
      

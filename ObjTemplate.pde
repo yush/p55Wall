@@ -49,8 +49,9 @@ abstract class ObjTemplate implements Comparable {
   
   public abstract void setObjSize(int aSize);
   public abstract int getObjSize();
-  public abstract void render();
+  public abstract void drawIt(PGraphics aBuffer, int contour, int typeBuffer);
   public abstract void toXml(StringBuilder aSB);
+  
   
   public ObjTemplate getMyMate() {
     if ( parent.head == this) {
@@ -65,12 +66,12 @@ abstract class ObjTemplate implements Comparable {
   public int compareTo(ObjArrow anObjTemplate) {
     int res=0;
      if ( this.center.z > anObjTemplate.center.z ) {
-       return 1;
+       res = 1;
      }
      if ( this.center.z < anObjTemplate.center.z ) {
-       return -1;
+       res = -1;
      }
-     return 0;
+     return res;
   }
   
 }
