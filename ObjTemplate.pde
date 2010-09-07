@@ -49,7 +49,6 @@ abstract class ObjTemplate implements Comparable {
   
   public abstract void setObjSize(int aSize);
   public abstract int getObjSize();
-  //public abstract void drawIt(int typeBuffer);
   public abstract void render();
   public abstract void toXml(StringBuilder aSB);
   

@@ -2,7 +2,6 @@ class ObjArrow extends ObjTemplate {
   int arrowWidth, arrowHeight;
   boolean dragged=false;
 
-  private PVector _tp1, _tp2, _tp3;
 	private RPolygon arrowOutside, arrowInside;
 
   ObjArrow(int tX, int tY, int aHeight, int aWidth, ObjHW theParent, ControlP5 tController) {
@@ -24,15 +23,15 @@ class ObjArrow extends ObjTemplate {
 		arrowWidth = anObj.getObjSize();
   }
  
-	RPolygon _rectHole(PVector v1, PVector v2, int tContour, int tHeight)
+	RPolygon _rectHole(PVector v1, PVector v2, int tWidth, int tHeight)
 	{
 		PVector vOrth;
 		RPoint pOrth, pStart, pEnd, pArrow, pContourSize, pContourHalfSize, pOffset;
 		RPoint p1,p2,p3,p4;
 		RContour aRectHole;
 
-		pContourHalfSize = new RPoint(tContour/2, tContour/2);
-		pContourSize = new RPoint(tContour, tContour);
+		pContourHalfSize = new RPoint(tWidth/2, tWidth/2);
+		pContourSize = new RPoint(tWidth, tWidth);
 
 		vOrth = _getOrthogonalVector(v1, v2);
 		pOrth = new RPoint(vOrth.x, vOrth.y);
@@ -126,20 +125,29 @@ class ObjArrow extends ObjTemplate {
 			arrowInside = arrowInside.union(aRectHole);
 		}
 	}
+	
+	private void _drawBufferWithGeom() {
+		backBuffer.noStroke(); 
+    backBuffer.fill(color(id));
+    backBuffer.beginDraw();
+    arrowOutside.draw(backBuffer);
+    backBuffer.endDraw();
+  }
 
   private void _drawWithGeom()
   {
-		_processArrowPolygon();
 		if (parent.ptrScreen != null) 
 		{
 			parent.ptrScreen.fill(0);
 	  	arrowOutside.draw(parent.ptrScreen);
 			parent.ptrScreen.fill(parent.objColor);
 			arrowInside.draw(parent.ptrScreen);
+			_drawBufferWithGeom();
 		}
   }
   
   public void render() {
+		_processArrowPolygon();
 		_drawWithGeom();
   }
   

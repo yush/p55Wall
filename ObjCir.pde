@@ -48,12 +48,12 @@ class ObjCir extends ObjTemplate {
   }
   
   private void _initShape() {
-      //base
+    //base
     shp1 = RShape.createCircle(center.x, center.y, radius+ parent.contourWeight);
     shp2 = RShape.createCircle(center.x, center.y, radius);
     
     //
-    shp3 = RShape.createRectangle(center.x,center.y,20,200);    
+    shp3 = RShape.createRectangle(center.x-parent.contourWeight/2,center.y-parent.contourWeight/2,20,200);    
     
     //calcule
     shp4 = RG.diff(shp1, shp2);
@@ -90,10 +90,6 @@ class ObjCir extends ObjTemplate {
   * dessine l'élement
   */
   public void render() {
-    /*
-    _draw(0,parent.contourWeight, parent.ptrScreen);
-    _draw(parent.objColor,0, parent.ptrScreen);
-    */
     _drawWithGeom(imageBuffer);
     _drawBufferWithGeom();
   }
