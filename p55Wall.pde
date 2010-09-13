@@ -15,7 +15,7 @@ import controlP5.*;
 
 ControlP5 controlP5;
 public boolean lPressed=false;
-ArrayList HWList = new ArrayList();
+ObjHWCollection HWList = new ObjHWCollection();
 ObjHW selectedObj;
 PGraphics backBuffer;
 
@@ -84,7 +84,6 @@ void draw() {
 void mousePressed() {
   ObjHW anObj;
   lPressed = true;
-  println("mousePressedr");
   int i;
   println("HWList size:"+HWList.size() );
   for (i =0; i < HWList.size(); i++ ) {
@@ -113,7 +112,6 @@ void mouseReleased() {
 }
 
 public void controlEvent(ControlEvent theEvent) {
-  //println("got a control event from controller with id "+theEvent.controller().id());
   if (theEvent.isController()) {
     switch(theEvent.controller().id()) {
       case(0):
@@ -143,16 +141,8 @@ public void controlEvent(ControlEvent theEvent) {
         selectedObj.objColor = color(red(selectedObj.objColor),green(selectedObj.objColor),blueValue);
         break;
       case(6):
-        StringBuilder aXml = new StringBuilder();
-        ObjHW anHWObj;
-        aXml.append("<HWList numObject=\""+HWList.size()+"\">");
-        for(int i=0; i<HWList.size(); i++) {
-          anHWObj = (ObjHW)HWList.get(i);
-          anHWObj.xml(aXml);
-        }
-        aXml.append("</HWList>");
-        println(aXml.toString());
-        break;
+        HWList.toString();
+	break;
       case(7):
         selectedObj.queue.center.z = theEvent.controller().value();
         break;
