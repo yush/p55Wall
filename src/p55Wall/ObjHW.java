@@ -6,7 +6,7 @@ import controlP5.*;
 public class ObjHW {
 	  //TODO: z buffer
 	  ControlP5 aController;
-	  PApplet pA;
+	  P55Wall pA;
 	  PGraphics ptrScreen;
 	  private PGraphics _backBuffer;  //backbuffer a remonter dans objet controlleur (a creer?)
 	  private int selectionWeight= 2;
@@ -20,8 +20,8 @@ public class ObjHW {
 	  public ObjLink aLink;
 	  
 	 
-	  ObjHW( PApplet tApplet,ControlP5 tController, PGraphics aScreen, PGraphics aBackBuffer) {
-	    pA = tApplet;
+	  ObjHW( P55Wall tWall,ControlP5 tController, PGraphics aScreen, PGraphics aBackBuffer) {
+	    pA = tWall;
 		ptrScreen = aScreen;
 	    _backBuffer = aBackBuffer;
 	    aController = tController;
@@ -33,7 +33,7 @@ public class ObjHW {
 	  }
 	  
 	  
-	  private void _drawObj(PGraphics aBuffer, int contourWeight, int typeBuffer) {
+	  private void _drawObj( int contourWeight, int typeBuffer) {
 	    if (head.selected) {
 	      head.center.x = pA.mouseX;
 	      head.center.y = pA.mouseY;
@@ -50,24 +50,25 @@ public class ObjHW {
 	    aLink.psrc2.x = queue.center.x;
 	    aLink.psrc2.y = queue.center.y;
 	    
-	    //aLink.drawIt(aBuffer, contourWeight, typeBuffer);    
-	    //head.drawIt(aBuffer, contourWeight, typeBuffer);
-	    //queue.drawIt(aBuffer, contourWeight, typeBuffer);
+	    aLink.drawIt(pA, contourWeight, typeBuffer);    
+	    head.drawIt(pA, contourWeight, typeBuffer);
+	    queue.drawIt(pA, contourWeight, typeBuffer);
 	  } 
-/*	  
+	  
+	  
 	  private boolean _isSelectedBackBuffer(int x, int y) {
-	    color res;
+	    int res;
 	    drawObjInBuffer();
 	    res = _backBuffer.get(x, y);
 	    //on parcourt la liste des composants
-	    println("_isSelectedBackBuffer");
-	    if ( color(head.id) == res ) {
+	    System.out.println("_isSelectedBackBuffer");
+	    if ( pA.color(head.id) == res ) {
 	      head.selected = true;
-	      println("head selected");
+	      System.out.println("head selected");
 	    }
-	    if ( color(queue.id) == res) {
+	    if ( pA.color(queue.id) == res) {
 	      queue.selected = true;
-	      println("queue selected");
+	      System.out.println("queue selected");
 	    }
 	    selected = queue.selected | head.selected;
 	    return selected;
@@ -77,7 +78,7 @@ public class ObjHW {
 	    if(selected) {
 	      aBuffer.beginDraw();
 	      aBuffer.fill(255,0,0);
-	      _drawObj(aBuffer, contourWeight+selectionWeight, 0); 
+	      _drawObj( contourWeight+selectionWeight, 0); 
 	      aBuffer.endDraw();
 	    }   
 	  }
@@ -86,28 +87,28 @@ public class ObjHW {
 
 	  
 	  public boolean isSelected(int clickX, int clickY) {
-	    return _isSelectedBackBuffer(mouseX, mouseY);
+	    return _isSelectedBackBuffer(pA.mouseX, pA.mouseY);
 	  }
 	  
-	  public void drawIt(PGraphics aBuffer, color aColor, int typeBuffer) {    
+	  public void drawIt(PGraphics aBuffer, int aColor, int typeBuffer) {    
 	    aBuffer.beginDraw();  
 	    aBuffer.pushStyle();
 	    aBuffer.noStroke();
 	    aBuffer.fill(0);
-	    _drawObj(aBuffer, contourWeight, typeBuffer);
+	    _drawObj( contourWeight, typeBuffer);
 	    aBuffer.fill(aColor);
-	    _drawObj(aBuffer, 0, typeBuffer);
+	    _drawObj( 0, typeBuffer);
 	    aBuffer.popStyle();
 	    aBuffer.endDraw();
 	  }
 	  
 	  public void drawObj() {
-	    _drawSelection(ptrScreen);
-	    drawIt(ptrScreen, objColor, 0);
+	    _drawSelection(pA.g);
+	    drawIt(pA.g, objColor, 0);
 	  }
 	  
 	  public void drawObjInBuffer() {
-	    drawIt(backBuffer, color(255) ,1);
+	    drawIt(pA.backBuffer, pA.color(255) ,1);
 	  }
 	  
 	  public void setUnselected() {
@@ -118,9 +119,9 @@ public class ObjHW {
 	  public void loadParametersUI() {
 	     aController.controller("headRadius").setValue(head.getObjSize());
 	     aController.controller("queueRadius").setValue(queue.getObjSize());
-	     aController.controller("red").setValue(red(objColor));
-	     aController.controller("green").setValue(green(objColor));
-	     aController.controller("blue").setValue(blue(objColor));
+	     aController.controller("red").setValue(pA.red(objColor));
+	     aController.controller("green").setValue(pA.green(objColor));
+	     aController.controller("blue").setValue(pA.blue(objColor));
 	  }
 	  
 	  public void xml(StringBuilder tStrXml) {
@@ -129,5 +130,4 @@ public class ObjHW {
 	     queue.toXml(tStrXml);
 	     tStrXml.append("</objHW>");
 	  }
-	  */
 }

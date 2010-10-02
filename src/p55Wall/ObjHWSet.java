@@ -3,11 +3,12 @@ package p55Wall;
 import java.util.*;
 
 class ObjHWSet {
-
+	//P55Wall tWall;
 	  public LinkedList theList;
 	  public ArrayList HWList;
 	  
 	  ObjHWSet() {
+		//tWall = aWall;
 	    theList = new LinkedList();
 	    HWList = new ArrayList();
 	  }
@@ -31,14 +32,14 @@ class ObjHWSet {
 	    ObjTemplate anObj;
 	    ObjHW anObjHW;
 	    int i;
-	    Iterator it = theList.iterator();
+	    Iterator it = HWList.iterator();
 	    System.out.println("Details du Set:"+theList.size()); 
 	    while (it.hasNext()) { // Get element 
 	      anObj = (ObjTemplate)it.next();
 	      anObjHW = anObj.parent;
 	      System.out.println("obj:"+anObj);
 	      System.out.println("objParent:"+anObjHW);
-	      //anObj.drawIt();
+	      anObjHW.drawObj( );
 	      //anObj.render();
 	      //anObj.toXml();
 	    }
