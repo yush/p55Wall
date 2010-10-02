@@ -1,4 +1,9 @@
+
+
 package p55Wall;
+
+import processing.core.*;
+import controlP5.*;
 
 public class ObjCir extends ObjTemplate{
 	  int radius;
@@ -7,9 +12,10 @@ public class ObjCir extends ObjTemplate{
 	  /*
 	  * Constructeur
 	  */
-	  /*
+	  
 	  public ObjCir(int tX, int tY, int tRad, ObjHW theParent, ControlP5 tController) {
-	    println("constructeur ObjCir");
+	    super(theParent);
+		System.out.println("constructeur ObjCir");
 	    parent = theParent;
 	    super.aController = tController;
 	    center.x = tX;
@@ -18,16 +24,16 @@ public class ObjCir extends ObjTemplate{
 	  }
 	  
 	  public ObjCir(ObjTemplate anObj) {
-	    parent = anObj.parent;
+	    super(anObj.parent);
 	    super.aController =  anObj.aController;
 	    center.x = (int)anObj.center.x;
 	    center.y = (int)anObj.center.y;
-	    radius = anObj.getObjSize();
+	    //radius = anObj.getObjSize();
 	  }
 	  
 	  public void setSelected(boolean tSelected) {
 	    if ((selected == true)  && (selected != tSelected)) {
-	      println("set selected radius:"+radius);
+	      System.out.println("set selected radius:"+radius);
 	      aController.controller("headRadius").setValue(radius); 
 	    }
 	    selected = tSelected; 
@@ -43,14 +49,14 @@ public class ObjCir extends ObjTemplate{
 	  
 	  //dessine l'Žlement
 
-	  public void drawIt(PGraphics aBuffer, int contour, int typeBuffer){
+	  public void drawIt(P55Wall tWall, int contour, int typeBuffer){
 	    if (typeBuffer ==  1) {
-	      aBuffer.fill(color(id));
+	      tWall.g.fill(tWall.color(id));
 	    }
-	    aBuffer.beginDraw();
-	    aBuffer.noStroke();
-	    aBuffer.ellipse(center.x,center.y,radius+contour,radius+contour);
-	    aBuffer.endDraw();
+	    tWall.g.beginDraw();
+	    tWall.g.noStroke();
+	    tWall.g.ellipse(center.x,center.y,radius+contour,radius+contour);
+	    tWall.g.endDraw();
 	  }
 	  
 	  public void toXml(StringBuilder aSB) {
@@ -66,6 +72,5 @@ public class ObjCir extends ObjTemplate{
 	  
 	  public int getObjSize() {
 	     return (int)radius;
-	  }
-*/		  
+	  }  
 }

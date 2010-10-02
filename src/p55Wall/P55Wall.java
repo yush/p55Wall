@@ -20,12 +20,12 @@ import controlP5.*;
 public class P55Wall extends PApplet {
 
 
+	
 	ControlP5 controlP5;
 	//public boolean lPressed=false;
-	//ObjHWSet HWList = new ObjHWSet();
-	//ObjHW selectedObj;
+	ObjHWSet HWList = new ObjHWSet();
+	ObjHW selectedObj;
 	PGraphics backBuffer;
-
 	void createInterface(ControlP5 controller) {
 	  ScrollList l;
 	  controlP5.Button bt;
@@ -69,17 +69,17 @@ public class P55Wall extends PApplet {
 	  controlP5 = new ControlP5(this);
 	  createInterface(controlP5);
 	  backBuffer = createGraphics(400,400,JAVA2D); 
-	  //HWList.add( new ObjHW(controlP5, this.g, backBuffer) );
+	  HWList.add( new ObjHW(this, controlP5, this.g, backBuffer) );
 	  stroke(0,0,0);
 	}
 
 	public void draw() {
-		/*
 	  ObjHW anObj;
 	  int i;
 	  background(100);
 	  backBuffer.background(255);
 	  //HWList.sort();
+	  /*
 	  for(i=0; i < HWList.size(); i++) {
 	    anObj = (ObjHW)HWList.get(i);
 	    anObj.drawObj();
@@ -185,4 +185,9 @@ public class P55Wall extends PApplet {
 	}
 
 	*/
+	
+	//main qui permet de lancer l'appliaction
+	public static void main(String _args[]) {
+		PApplet.main(new String[] { p55Wall.P55Wall.class.getName() });
+	}
 }

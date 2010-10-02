@@ -1,15 +1,18 @@
 package p55Wall;
 
+import processing.core.*;
+import controlP5.*;
+
 public class ObjHW {
 	  //TODO: z buffer
-		/*
 	  ControlP5 aController;
+	  PApplet pA;
 	  PGraphics ptrScreen;
 	  private PGraphics _backBuffer;  //backbuffer a remonter dans objet controlleur (a creer?)
 	  private int selectionWeight= 2;
 	  private int contourWeight= 10;
 	  
-	  public color objColor;
+	  public int objColor;
 	  public boolean selected;
 	  
 	  public ObjTemplate head;
@@ -17,26 +20,28 @@ public class ObjHW {
 	  public ObjLink aLink;
 	  
 	 
-	  ObjHW( ControlP5 tController, PGraphics aScreen, PGraphics aBackBuffer) {
-	    ptrScreen = aScreen;
+	  ObjHW( PApplet tApplet,ControlP5 tController, PGraphics aScreen, PGraphics aBackBuffer) {
+	    pA = tApplet;
+		ptrScreen = aScreen;
 	    _backBuffer = aBackBuffer;
 	    aController = tController;
 	    head = new ObjCir(200,200,50, this, aController);
 	    queue = new ObjArrow(200,200,40,this, aController);
 	    //queue = new ObjCir(200,250,20, this, aController);
-	    aLink = new ObjLink(200,200,200,250,10);
-	    objColor = color(255,220,0);
+	    aLink = new ObjLink(200,200,200,250,10, this);
+	    objColor = pA.color(255,220,0);
 	  }
+	  
 	  
 	  private void _drawObj(PGraphics aBuffer, int contourWeight, int typeBuffer) {
 	    if (head.selected) {
-	      head.center.x = mouseX;
-	      head.center.y = mouseY;
+	      head.center.x = pA.mouseX;
+	      head.center.y = pA.mouseY;
 	      aLink.processed = false;
 	    }
 	    if (queue.selected) {
-	      queue.center.x = mouseX;
-	      queue.center.y = mouseY;
+	      queue.center.x = pA.mouseX;
+	      queue.center.y = pA.mouseY;
 	      aLink.processed = false;
 	    }
 
@@ -45,11 +50,11 @@ public class ObjHW {
 	    aLink.psrc2.x = queue.center.x;
 	    aLink.psrc2.y = queue.center.y;
 	    
-	    aLink.drawIt(aBuffer, contourWeight, typeBuffer);    
-	    head.drawIt(aBuffer, contourWeight, typeBuffer);
-	    queue.drawIt(aBuffer, contourWeight, typeBuffer);
+	    //aLink.drawIt(aBuffer, contourWeight, typeBuffer);    
+	    //head.drawIt(aBuffer, contourWeight, typeBuffer);
+	    //queue.drawIt(aBuffer, contourWeight, typeBuffer);
 	  } 
-	  
+/*	  
 	  private boolean _isSelectedBackBuffer(int x, int y) {
 	    color res;
 	    drawObjInBuffer();

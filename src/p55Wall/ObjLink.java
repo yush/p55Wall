@@ -1,14 +1,18 @@
 package p55Wall;
 
+import processing.core.*;
+//import controlP5.*;
+
 public class ObjLink extends ObjTemplate {
-	/*  
+	  
 	PVector pf1,pf2,pf3,pf4;    //coordonnées finale du rectangle
 	  PVector psrc1, psrc2;    //coordonnées du segment a suivre
 	  int weight;
 	  boolean processed;
 	  boolean dragged;
 	  
-	  ObjLink(int tX1,int tY1,int tX2,int tY2,int tWeight) {
+	  ObjLink(int tX1,int tY1,int tX2,int tY2,int tWeight, ObjHW theParent) {
+		  super(theParent);
 	    psrc1 = new PVector(tX1, tY1);
 	    psrc2 = new PVector(tX2, tY2);
 	    weight = tWeight; 
@@ -33,14 +37,14 @@ public class ObjLink extends ObjTemplate {
 	    processed = true;
 	  }
 	  
-	  public void drawIt(PGraphics aBuffer, int contour, int typeBuffer) {
-	    aBuffer.pushStyle();
+	  public void drawIt(P55Wall tWall, int contour, int typeBuffer) {
+		tWall.g.pushStyle();
 	    processCoord(contour);  //TODO: ne recalculer que si necessaire, mais il faut calculer le contour, puis l'interieur
 	    if (typeBuffer ==  1) {
-	      aBuffer.fill(color(id));
+	    	tWall.g.fill(tWall.color(id));
 	    }
-	    aBuffer.quad(pf1.x, pf1.y, pf2.x, pf2.y, pf3.x, pf3.y, pf4.x, pf4.y);
-	    aBuffer.popStyle();
+	    tWall.g.quad(pf1.x, pf1.y, pf2.x, pf2.y, pf3.x, pf3.y, pf4.x, pf4.y);
+	    tWall.g.popStyle();
 	  }
 	  
 	  public void setObjSize(int aSize) {
@@ -54,5 +58,5 @@ public class ObjLink extends ObjTemplate {
 	  public void toXml(StringBuilder aSB) {
 	    
 	  }
-	  */
+	 
 	}

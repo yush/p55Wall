@@ -1,14 +1,17 @@
 package p55Wall;
 
-public class ObjArrow /*extends ObjTemplate */{
-	/*
+import processing.core.*;
+import controlP5.*;
+
+public class ObjArrow extends ObjTemplate {
 		  int arrowSize;
 		  boolean dragged=false;
 
 		  private PVector _tp1, _tp2, _tp3;
 
 		  ObjArrow(int tX1, int tY1, int aSize, ObjHW theParent, ControlP5 tController) {
-		    println("constructeur ObjArrow");
+			super(theParent);
+		    System.out.println("constructeur ObjArrow");
 		    super.aController = tController;
 		    parent = theParent; 
 		    arrowSize = aSize;
@@ -16,13 +19,14 @@ public class ObjArrow /*extends ObjTemplate */{
 		  
 		  
 		  public ObjArrow(ObjTemplate anObj) {
-		    parent = anObj.parent;
+		    super(anObj.parent);
 		    super.aController =  anObj.aController;
 		    center.x = (int)anObj.center.x;
 		    center.y = (int)anObj.center.y;
-		    arrowSize = anObj.getObjSize();
+		    //arrowSize = anObj.getObjSize();
 		  }
 
+		  
 		  private void processCoord(PVector aP1, PVector aP2, int tSize) {
 		    PVector orthoVector, vSegment, aVector, arrowBase;
 		    vSegment = new PVector(aP2.x-aP1.x,aP2.y-aP1.y,0);
@@ -39,17 +43,17 @@ public class ObjArrow /*extends ObjTemplate */{
 		    _tp3 = PVector.add(aP2, aVector );
 		  }
 
-		  public void drawIt(PGraphics aBuffer, int contourWeight, int typeBuffer){
+		  public void drawIt(P55Wall tWall, int contourWeight, int typeBuffer){
 		    if (typeBuffer ==  1) {
-		      aBuffer.fill(color(id));
+		      tWall.g.fill(tWall.color(id));
 		    }
 		    ObjTemplate myMate = getMyMate();    
 		    if (myMate != null) {
 		      processCoord(myMate.center, center, arrowSize+contourWeight);
-		      aBuffer.beginDraw();
-		      aBuffer.noStroke();
-		      aBuffer.triangle(_tp1.x, _tp1.y,_tp2.x, _tp2.y,_tp3.x, _tp3.y);
-		      aBuffer.endDraw();
+		      tWall.g.beginDraw();
+		      tWall.g.noStroke();
+		      tWall.g.triangle(_tp1.x, _tp1.y,_tp2.x, _tp2.y,_tp3.x, _tp3.y);
+		      tWall.g.endDraw();
 		    }
 
 
@@ -69,7 +73,4 @@ public class ObjArrow /*extends ObjTemplate */{
 		  public int getObjSize() {
 		    return arrowSize; 
 		  }
-
-		}
-*/
 }

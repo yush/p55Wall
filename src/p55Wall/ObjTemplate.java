@@ -1,20 +1,27 @@
 package p55Wall;
 
-abstract class ObjTemplate /*implements Comparable*/ {
-/*
+import processing.core.*;
+import controlP5.*;
+
+abstract class ObjTemplate implements Comparable {
+
 	public ObjHW parent;
 	  public PVector center;
 	  public int id;  //hash key (used by backbuffer)
 	  public ControlP5 aController;
 	  boolean selected=false;
 	  boolean processed=false;
-	  
-	  
-	  ObjTemplate() {
-	    println("constructeur ObjTemplate");
-	    id = (int)random(255);
+	  	  
+	  ObjTemplate(ObjHW tParent) {
+		parent = tParent;
+	    System.out.println("constructeur ObjTemplate");
+	    id = (int)this.pA().random(255);
 	    center = new PVector();
 	    center.z = 0;
+	  }
+	  
+	  public PApplet pA() {
+		  return parent.pA;
 	  }
 	  
 	  //retourne le vecteur orthogonal a un vecteur definit par les 2 points en parametre
@@ -49,7 +56,7 @@ abstract class ObjTemplate /*implements Comparable*/ {
 	  
 	  public abstract void setObjSize(int aSize);
 	  public abstract int getObjSize();
-	  public abstract void drawIt(PGraphics aBuffer, int contour, int typeBuffer);
+	  public abstract void drawIt(P55Wall tWall, int contour, int typeBuffer);
 	  public abstract void toXml(StringBuilder aSB);
 	  
 	  
@@ -73,5 +80,5 @@ abstract class ObjTemplate /*implements Comparable*/ {
 	     }
 	     return res;
 	  }
-	*/  
+
 	}
