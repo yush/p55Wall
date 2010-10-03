@@ -21,10 +21,14 @@ class ObjHWSet {
 	    System.out.println(anObj.head.compareTo(anObj.queue));
 	    anObj.aLink.center.z = 1;
 	   
-	    theList.add(anObj.head);
-	    theList.add(anObj.queue);
-	    theList.add(anObj.aLink); 
+	    HWList.add(anObj.head);
+	    HWList.add(anObj.queue);
+	    HWList.add(anObj.aLink); 
 
+	  }
+	  
+	  public void log() {
+		  System.out.println("HWListe.size:"+HWList.size());
 	  }
 	  
 	  //dessiner tous les sous-objet pour recomposer ObjHW
@@ -39,7 +43,7 @@ class ObjHWSet {
 	      anObjHW = anObj.parent;
 	      System.out.println("obj:"+anObj);
 	      System.out.println("objParent:"+anObjHW);
-	      anObjHW.drawObj( );
+	      //anObjHW.drawObj( );
 	      //anObj.render();
 	      //anObj.toXml();
 	    }

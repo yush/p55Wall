@@ -11,6 +11,9 @@ package p55Wall;
  * rq: ameliorer interface
  *     utiliser arc de cercle pour faire de la bi-matiere
  *     
+ *     
+ *     backbuffer
+ *     log
  */
 
 
@@ -23,7 +26,7 @@ public class P55Wall extends PApplet {
 	
 	ControlP5 controlP5;
 	public boolean lPressed=false;
-	ObjHWSet HWList = new ObjHWSet();
+	ObjHWSet HWSet = new ObjHWSet();
 	ObjHW selectedObj;
 	PGraphics backBuffer;
 	void createInterface(ControlP5 controller) {
@@ -68,7 +71,8 @@ public class P55Wall extends PApplet {
 	  controlP5 = new ControlP5(this);
 	  createInterface(controlP5);
 	  backBuffer = createGraphics(400,400,JAVA2D); 
-	  HWList.add( new ObjHW(this, controlP5, this.g, backBuffer) );
+	  HWSet.add( new ObjHW(this, controlP5, this.g, backBuffer) );
+	  HWSet.log();
 	  stroke(0,0,0);
 	}
 
@@ -79,8 +83,8 @@ public class P55Wall extends PApplet {
 	  backBuffer.background(255);
 	  //HWList.sort();
 
-	  for(i=0; i < HWList.HWList.size(); i++) {
-	    anObj = (ObjHW)HWList.HWList.get(i);
+	  for(i=0; i < HWSet.HWList.size(); i++) {
+	    anObj = (ObjHW)HWSet.HWList.get(i);
 	    anObj.drawObj();
 	    anObj.drawObjInBuffer();
 	  }
@@ -93,9 +97,9 @@ public class P55Wall extends PApplet {
 	  lPressed = true;
 	  System.out.println("mousePressedr");
 	  int i;
-	  println("HWList size:"+HWList.HWList.size() );
-	  for (i =0; i < HWList.HWList.size(); i++ ) {
-	    anObj = (ObjHW)HWList.HWList.get(i);
+	  println("HWList size:"+HWSet.HWList.size() );
+	  for (i =0; i < HWSet.HWList.size(); i++ ) {
+	    anObj = (ObjHW)HWSet.HWList.get(i);
 	    if ( anObj.isSelected(mouseX,mouseY) ) {
 	      println("selected & break");
 	      selectedObj = anObj;
@@ -112,8 +116,8 @@ public class P55Wall extends PApplet {
 	  int i=0;
 	  println("mouse released");
 	  lPressed = false;
-	  while (i < HWList.HWList.size() ) {
-	    anObj = (ObjHW)HWList.HWList.get(i);
+	  while (i < HWSet.HWList.size() ) {
+	    anObj = (ObjHW)HWSet.HWList.get(i);
 	    anObj.setUnselected();
 	    i++;  
 	  }
@@ -135,7 +139,7 @@ public class P55Wall extends PApplet {
 	        break;  
 	      case(2):
 	        println("add HWObj");
-	        HWList.add( new ObjHW(this, controlP5, this.g, backBuffer) );
+	        HWSet.add( new ObjHW(this, controlP5, this.g, backBuffer) );
 	        break;
 	      case(3):
 	        int redValue = (int)theEvent.controller().value();
@@ -152,9 +156,9 @@ public class P55Wall extends PApplet {
 	      case(6):
 	        StringBuilder aXml = new StringBuilder();
 	        ObjHW anHWObj;
-	        aXml.append("<HWList numObject=\""+HWList.HWList.size()+"\">");
-	        for(int i=0; i<HWList.HWList.size(); i++) {
-	          anHWObj = (ObjHW)HWList.HWList.get(i);
+	        aXml.append("<HWList numObject=\""+HWSet.HWList.size()+"\">");
+	        for(int i=0; i<HWSet.HWList.size(); i++) {
+	          anHWObj = (ObjHW)HWSet.HWList.get(i);
 	          anHWObj.xml(aXml);
 	        }
 	        aXml.append("</HWList>");

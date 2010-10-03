@@ -96,8 +96,8 @@ public class ObjHW {
 	    aBuffer.noStroke();
 	    aBuffer.fill(0);
 	    _drawObj( contourWeight, typeBuffer);
-	    aBuffer.fill(aColor);
-	    _drawObj( 0, typeBuffer);
+	    //aBuffer.fill(aColor);
+	    aBuffer.fill(255);
 	    aBuffer.popStyle();
 	    aBuffer.endDraw();
 	  }
