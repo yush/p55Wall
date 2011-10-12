@@ -79,4 +79,3 @@ void mouseReleased() {
 public void controlEvent(ControlEvent theEvent) {
   aGUICtrl.dispatchEvent(theEvent);
 }
-
