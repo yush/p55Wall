@@ -13,14 +13,16 @@ class ObjHW {
   public ObjTemplate queue;
   public ObjLink aLink;
   
- 
-  ObjHW( ControlP5 tController, PGraphics aScreen, PGraphics aBackBuffer) {
-    ptrScreen = aScreen;
-    _backBuffer = aBackBuffer;
-    aController = tController;
+  public ArrayList nodeList;
+  
+  ObjHW(GUICtrl tGUICtrl) { 
+    ptrScreen = tGUICtrl.screenBuf;
+    _backBuffer = tGUICtrl.backBuf;
+    aController = tGUICtrl.ctrlControlP5;
+    nodeList = new ArrayList();
     head = new ObjCir(200,200,50, this, aController);
     queue = new ObjArrow(200,200,40,this, aController);
-    //queue = new ObjCir(200,250,20, this, aController);
+    nodeList.add(head);
     aLink = new ObjLink(200,200,200,250,10);
     objColor = color(255,220,0);
   }
@@ -29,6 +31,7 @@ class ObjHW {
   * Private
   */
   private void _drawObj(PGraphics aBuffer, int contourWeight, int typeBuffer) {
+    
     if (head.selected) {
       head.center.x = mouseX;
       head.center.y = mouseY;
@@ -69,20 +72,15 @@ class ObjHW {
   }
 
   private void _drawSelection(PGraphics aBuffer) {
-    if(selected) {
       aBuffer.beginDraw();
       aBuffer.fill(255,0,0);
       _drawObj(aBuffer, contourWeight+selectionWeight, 0); 
-      aBuffer.endDraw();
-    }   
+      aBuffer.endDraw(); 
   }
   
   /*
   * Public
   */
-  
-
-  
   public boolean isSelected(int clickX, int clickY) {
     return _isSelectedBackBuffer(mouseX, mouseY);
   }
@@ -100,7 +98,9 @@ class ObjHW {
   }
   
   public void drawObj() {
-    _drawSelection(ptrScreen);
+    if (selected) {
+      _drawSelection(ptrScreen);
+    }
     drawIt(ptrScreen, objColor, 0);
   }
   

@@ -1,12 +1,14 @@
 
 class GUICtrl {
-  ControlP5 ctrlControlP5;
-  PGraphics tGBuf;
+  public ControlP5 ctrlControlP5;
+  public PGraphics screenBuf;
+  public PGraphics backBuf;
   
   
-  GUICtrl(ControlP5 aControler, PGraphics aBuffer) {
+  GUICtrl(ControlP5 aControler, PGraphics aBuffer, PGraphics aBackBuffer) {
     ctrlControlP5 = aControler;
-    tGBuf = aBuffer;
+    screenBuf = aBuffer;
+    backBuf = aBackBuffer;
   }
   
   public ControlP5 ctrlControlP5() {
@@ -27,8 +29,6 @@ class GUICtrl {
     ctrlControlP5.addSlider("blue",0,255,100,10,90,100,14).setId(5);
     
     controlP5.addButton("print",128,10,140,80,20).setId(6);
-    
-    
     /*
      * Boutons changement forme
      */
@@ -50,6 +50,14 @@ class GUICtrl {
      controlP5.addSlider("hwZBuffer",-100,100,0,10,250,80,14).setId(7);
   } 
   
+  public void drawBackground() {
+    fill(0);
+    rect(0,0,200,400);
+    fill(100);
+    rect(200,0,400,400);
+    backBuffer.background(255);  
+  }
+  
   public void dispatchEvent(ControlEvent theEvent) {
     if (theEvent.isController()) {
       switch(theEvent.controller().id()) {
@@ -65,7 +73,7 @@ class GUICtrl {
           break;  
         case(2):
           println("add HWObj");
-          HWList.add( new ObjHW(controlP5, tGBuf, backBuffer) );
+          theHWList.add( new ObjHW(this));
           break;
         case(3):
           int redValue = (int)theEvent.controller().value();
@@ -80,7 +88,7 @@ class GUICtrl {
           selectedObj.objColor = color(red(selectedObj.objColor),green(selectedObj.objColor),blueValue);
           break;
         case(6):
-          HWList.toString();
+          theHWList.toString();
   	break;
         case(7):
           selectedObj.queue.center.z = theEvent.controller().value();

@@ -33,11 +33,6 @@ class ObjArrow extends ObjTemplate /*implements Comparable*/ {
     aVector.normalize();
     aVector.mult(tSize/2);
     _tp3 = PVector.add(aP2, aVector );
-    /*
-    println("tp1:"+_tp1);
-    println("tp2:"+_tp2);
-    println("tp3:"+_tp3);
-    */
   }
 
   public void drawIt(PGraphics aBuffer, int contourWeight, int typeBuffer){
@@ -52,8 +47,6 @@ class ObjArrow extends ObjTemplate /*implements Comparable*/ {
       aBuffer.triangle(_tp1.x, _tp1.y,_tp2.x, _tp2.y,_tp3.x, _tp3.y);
       aBuffer.endDraw();
     }
-
-
   }
   
   public void toXml(StringBuilder aSB) {

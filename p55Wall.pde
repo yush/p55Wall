@@ -13,11 +13,10 @@ import controlP5.*;
  *     
  */
 
-
 ControlP5 controlP5;
 GUICtrl aGUICtrl;
 public boolean lPressed=false;
-ObjHWCollection HWList = new ObjHWCollection();
+ObjHWCollection theHWList = new ObjHWCollection();
 ObjHW selectedObj;
 PGraphics backBuffer;
 
@@ -25,21 +24,20 @@ void setup() {
   smooth();
   size(800,400);
   controlP5 = new ControlP5(this);
-  aGUICtrl = new GUICtrl(controlP5, this.g);
-  aGUICtrl.createInterface(controlP5);
   backBuffer = createGraphics(400,400,JAVA2D); 
-  HWList.add( new ObjHW(aGUICtrl.ctrlControlP5(), this.g, backBuffer) );
+  aGUICtrl = new GUICtrl(controlP5, this.g, backBuffer);
+  aGUICtrl.createInterface(controlP5);
+  theHWList.add(new ObjHW(aGUICtrl));
   stroke(0,0,0);
 }
 
 void draw() {
   ObjHW anObj;
   int i;
-  background(100);
-  backBuffer.background(255);
   //HWList.sort();
-  for(i=0; i < HWList.size(); i++) {
-    anObj = (ObjHW)HWList.get(i);
+  aGUICtrl.drawBackground();
+  for(i=0; i < theHWList.size(); i++) {
+    anObj = (ObjHW)theHWList.get(i);
     anObj.drawObj();
     anObj.drawObjInBuffer();
   }
@@ -50,9 +48,9 @@ void mousePressed() {
   ObjHW anObj;
   lPressed = true;
   int i;
-  println("HWList size:"+HWList.size() );
-  for (i =0; i < HWList.size(); i++ ) {
-    anObj = (ObjHW)HWList.get(i);
+  println("HWList size:"+theHWList.size() );
+  for (i =0; i < theHWList.size(); i++ ) {
+    anObj = (ObjHW)theHWList.get(i);
     if ( anObj.isSelected(mouseX,mouseY) ) {
       println("selected & break");
       selectedObj = anObj;
@@ -69,8 +67,8 @@ void mouseReleased() {
   int i=0;
   println("mouse released");
   lPressed = false;
-  while (i < HWList.size() ) {
-    anObj = (ObjHW)HWList.get(i);
+  while (i < theHWList.size() ) {
+    anObj = (ObjHW)theHWList.get(i);
     anObj.setUnselected();
     i++;  
   }
