@@ -17,7 +17,7 @@ ControlP5 controlP5;
 GUICtrl aGUICtrl;
 public boolean lPressed=false;
 ObjHWCollection theHWList = new ObjHWCollection();
-ObjHW selectedObj;
+ObjTemplate selectedObj;
 PGraphics backBuffer;
 
 void setup() {
@@ -51,10 +51,10 @@ void mousePressed() {
   println("HWList size:"+theHWList.size() );
   for (i =0; i < theHWList.size(); i++ ) {
     anObj = (ObjHW)theHWList.get(i);
-    if ( anObj.isSelected(mouseX,mouseY) ) {
+    if ( anObj.isSelected(mouseX,mouseY) != null ) {
       println("selected & break");
-      selectedObj = anObj;
-      anObj.loadParametersUI();
+      selectedObj = anObj.theSelectedObj;
+      selectedObj.loadParametersUI();
     }
     else {
       anObj.setUnselected();

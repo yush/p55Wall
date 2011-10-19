@@ -18,6 +18,14 @@ abstract class ObjTemplate implements Comparable {
     center.z = 0;
   }
   
+  public color getObjColor() {
+    return parent.objColor; 
+  }
+  
+  public void setObjColor(color aColor) {
+    parent.objColor = aColor; 
+  }
+  
   //retourne le vecteur orthogonal a un vecteur definit par les 2 points en parametre
   protected PVector _getOrthogonalVector(PVector src, PVector dest) {
     float longueur;
@@ -72,6 +80,13 @@ abstract class ObjTemplate implements Comparable {
        res = -1;
      }
      return res;
+  }
+  
+  public void loadParametersUI() {
+     aController.controller("size").setValue(this.getObjSize());
+     aController.controller("red").setValue(red(parent.objColor));
+     aController.controller("green").setValue(green(parent.objColor));
+     aController.controller("blue").setValue(blue(parent.objColor));
   }
   
 }

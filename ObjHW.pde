@@ -8,6 +8,7 @@ class ObjHW {
   
   public color objColor;
   public boolean selected;
+  public ObjTemplate theSelectedObj;
   
   public ObjTemplate head;
   public ObjTemplate queue;
@@ -25,6 +26,7 @@ class ObjHW {
     nodeList.add(head);
     aLink = new ObjLink(200,200,200,250,10);
     objColor = color(255,220,0);
+    theSelectedObj = null;
   }
   
   /*
@@ -53,7 +55,7 @@ class ObjHW {
     queue.drawIt(aBuffer, contourWeight, typeBuffer);
   } 
   
-  private boolean _isSelectedBackBuffer(int x, int y) {
+  private ObjTemplate _isSelectedBackBuffer(int x, int y) {
     color res;
     drawObjInBuffer();
     res = _backBuffer.get(x, y);
@@ -61,14 +63,16 @@ class ObjHW {
     println("_isSelectedBackBuffer");
     if ( color(head.id) == res ) {
       head.selected = true;
+      theSelectedObj = head;
       println("head selected");
     }
     if ( color(queue.id) == res) {
       queue.selected = true;
+      theSelectedObj = queue;
       println("queue selected");
     }
     selected = queue.selected | head.selected;
-    return selected;
+    return theSelectedObj;
   }
 
   private void _drawSelection(PGraphics aBuffer) {
@@ -81,7 +85,7 @@ class ObjHW {
   /*
   * Public
   */
-  public boolean isSelected(int clickX, int clickY) {
+  public ObjTemplate isSelected(int clickX, int clickY) {
     return _isSelectedBackBuffer(mouseX, mouseY);
   }
   
@@ -113,6 +117,7 @@ class ObjHW {
     queue.selected = false;
   }
   
+  /*
   public void loadParametersUI() {
      aController.controller("headRadius").setValue(head.getObjSize());
      aController.controller("queueRadius").setValue(queue.getObjSize());
@@ -120,6 +125,7 @@ class ObjHW {
      aController.controller("green").setValue(green(objColor));
      aController.controller("blue").setValue(blue(objColor));
   }
+  */
   
   public void xml(StringBuilder tStrXml) {
      tStrXml.append("<objHW id='test'>");
