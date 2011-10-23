@@ -1,6 +1,6 @@
 class ObjLink extends ObjTemplate {
-  PVector pf1,pf2,pf3,pf4;    //coordonnées finale du rectangle
-  PVector psrc1, psrc2;    //coordonnées du segment a suivre
+  PVector pf1,pf2,pf3,pf4;    //coordonnÃ©es finale du rectangle
+  PVector psrc1, psrc2;    //coordonnÃ©es du segment a suivre
   int weight;
   boolean processed;
   boolean dragged;
@@ -13,7 +13,7 @@ class ObjLink extends ObjTemplate {
   }
   
   /*
-  * determine les coordonnées du rectangle a partir de 2 points
+  * determine les coordonnÃ©es du rectangle a partir de 2 points
   */
   private void processCoord(int contour) {
     PVector vOrtho;
@@ -22,7 +22,7 @@ class ObjLink extends ObjTemplate {
     // orthogonal fait 1/2 epaisseur
     vOrtho.mult((weight+contour)/2);
 
-    //recup coordonnées finales
+    //recup coordonnÃ©es finales
     pf1 = PVector.add(psrc1, vOrtho);
     pf4 = PVector.sub(pf1, vOrtho);
     pf4.sub(vOrtho); 
@@ -54,3 +54,4 @@ class ObjLink extends ObjTemplate {
   }
   
 }
+

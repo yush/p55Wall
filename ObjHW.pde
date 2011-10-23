@@ -7,7 +7,7 @@ class ObjHW {
   private int contourWeight= 10;
   
   public color objColor;
-  public boolean selected;
+  //public boolean selected;
   public ObjTemplate theSelectedObj;
   
   public ObjTemplate head;
@@ -26,7 +26,14 @@ class ObjHW {
     nodeList.add(head);
     aLink = new ObjLink(200,200,200,250,10);
     objColor = color(255,220,0);
-    theSelectedObj = null;
+    theSelectedObj = null; 
+  }
+  
+  public String toString() {
+    StringBuilder aStr = new StringBuilder();
+    aStr.append(head.toString());
+    aStr.append(queue.toString());
+    return aStr.toString(); 
   }
   
   /*
@@ -34,12 +41,12 @@ class ObjHW {
   */
   private void _drawObj(PGraphics aBuffer, int contourWeight, int typeBuffer) {
     
-    if (head.selected) {
+    if (head.isSelected) {
       head.center.x = mouseX;
       head.center.y = mouseY;
       aLink.processed = false;
     }
-    if (queue.selected) {
+    if (queue.isSelected) {
       queue.center.x = mouseX;
       queue.center.y = mouseY;
       aLink.processed = false;
@@ -60,18 +67,15 @@ class ObjHW {
     drawObjInBuffer();
     res = _backBuffer.get(x, y);
     //on parcourt la liste des composants
-    println("_isSelectedBackBuffer");
-    if ( color(head.id) == res ) {
-      head.selected = true;
-      theSelectedObj = head;
-      println("head selected");
+    if ( head.isSelected(x,y) ) {
+      return head;
     }
-    if ( color(queue.id) == res) {
-      queue.selected = true;
-      theSelectedObj = queue;
-      println("queue selected");
+    else if (queue.isSelected()) {
+      return queue;
     }
-    selected = queue.selected | head.selected;
+    else {
+      return null;
+    }
     return theSelectedObj;
   }
 
@@ -102,9 +106,11 @@ class ObjHW {
   }
   
   public void drawObj() {
+    /*
     if (selected) {
       _drawSelection(ptrScreen);
     }
+    */
     drawIt(ptrScreen, objColor, 0);
   }
   
@@ -113,8 +119,8 @@ class ObjHW {
   }
   
   public void setUnselected() {
-    head.selected = false;
-    queue.selected = false;
+    head.isSelected = false;
+    queue.isSelected = false;
   }
   
   /*

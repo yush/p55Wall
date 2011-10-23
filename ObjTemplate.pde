@@ -3,7 +3,7 @@ abstract class ObjTemplate implements Comparable {
   public PVector center;
   public int id;  //hash key (used by backbuffer)
   public ControlP5 aController;
-  boolean selected=false;
+  boolean isSelected=false;
   boolean processed=false;
   
   /*
@@ -12,7 +12,6 @@ abstract class ObjTemplate implements Comparable {
   */
   
   ObjTemplate() {
-    println("constructeur ObjTemplate");
     id = (int)random(255);
     center = new PVector();
     center.z = 0;
@@ -41,6 +40,17 @@ abstract class ObjTemplate implements Comparable {
     vSegment.mult(longueur);
     return vOrtho;
   }
+  
+  
+  public String toString() {
+     StringBuilder aStr = new StringBuilder();
+    aStr.append( this.getClass().getName()+"\r\n");
+    aStr.append( "x:"+center.x+"\r\n");
+    aStr.append( "y:"+center.y+"\r\n");
+    aStr.append(" isSelected:"+ isSelected+"\r\n");
+   return aStr.toString(); 
+  }
+  
   
   public int compareTo(Object anObjTemplate) {
     int res=0;
@@ -89,4 +99,16 @@ abstract class ObjTemplate implements Comparable {
      aController.controller("blue").setValue(blue(parent.objColor));
   }
   
+  public ObjTemplate isSelected() {
+    if ( color(head.id) == res ) {
+      head.isSelected = true;
+      theSelectedObj = head;
+      println("head selected");
+    }
+    if ( color(queue.id) == res) {
+      queue.isSelected = true;
+      theSelectedObj = queue;
+      println("queue selected");
+    }
+  }
 }

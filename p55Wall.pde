@@ -2,21 +2,21 @@ import controlP5.*;
 
 /*
  * TODO:
- *  1. Z-Buffer
- *  2. selection: 
+ * HW ou Obj possede methode qui retourne l'obj selectionne
+ *  1. selection: 
+ *  2. Multi-nodes
  *  3. Better XML
  *  4. Sauvegarde
- *  5. Multi-nodes
+ *  1. Z-Buffer 
  *
- * rq: ameliorer interface
- *     utiliser arc de cercle pour faire de la bi-matiere
+ * rq: utiliser arc de cercle pour faire de la bi-matiere
  *     
  */
 
 ControlP5 controlP5;
 GUICtrl aGUICtrl;
 public boolean lPressed=false;
-ObjHWCollection theHWList = new ObjHWCollection();
+ObjHWCollection theHWList;
 ObjTemplate selectedObj;
 PGraphics backBuffer;
 
@@ -27,6 +27,7 @@ void setup() {
   backBuffer = createGraphics(400,400,JAVA2D); 
   aGUICtrl = new GUICtrl(controlP5, this.g, backBuffer);
   aGUICtrl.createInterface(controlP5);
+  theHWList = new ObjHWCollection(aGUICtrl);
   theHWList.add(new ObjHW(aGUICtrl));
   stroke(0,0,0);
 }
@@ -39,33 +40,28 @@ void draw() {
   for(i=0; i < theHWList.size(); i++) {
     anObj = (ObjHW)theHWList.get(i);
     anObj.drawObj();
-    anObj.drawObjInBuffer();
   }
-  //image(backBuffer, 400, 0);
+  image(backBuffer, 600, 0);
 }
 
 void mousePressed() {
-  ObjHW anObj;
+  ObjHW aHWObj;
   lPressed = true;
   int i;
-  println("HWList size:"+theHWList.size() );
-  for (i =0; i < theHWList.size(); i++ ) {
-    anObj = (ObjHW)theHWList.get(i);
-    if ( anObj.isSelected(mouseX,mouseY) != null ) {
-      println("selected & break");
-      selectedObj = anObj.theSelectedObj;
-      selectedObj.loadParametersUI();
-    }
-    else {
-      anObj.setUnselected();
-    }
+  /*
+  selectedObj = theHWList.getSelectedObject();
+  if ( selectedObj != null ) {   
+    selectedObj.loadParametersUI();
   }
+  else {
+    println("no selection");
+  }
+  */
 }
 
 void mouseReleased() {
   ObjHW anObj;
   int i=0;
-  println("mouse released");
   lPressed = false;
   while (i < theHWList.size() ) {
     anObj = (ObjHW)theHWList.get(i);

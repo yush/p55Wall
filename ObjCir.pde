@@ -23,11 +23,11 @@ class ObjCir extends ObjTemplate {
   }
   
   public void setSelected(boolean tSelected) {
-    if ((selected == true)  && (selected != tSelected)) {
+    if ((isSelected == true)  && ( isSelected != tSelected)) {
       println("set selected radius:"+radius);
       aController.controller("headRadius").setValue(radius); 
     }
-    selected = tSelected; 
+    isSelected = tSelected; 
   }
   
   /*
@@ -46,7 +46,7 @@ class ObjCir extends ObjTemplate {
   */
   
   /*
-  * dessine l'élement
+  * dessine l'Ã©lement
   */
   public void drawIt(PGraphics aBuffer, int contour, int typeBuffer){
     if (typeBuffer ==  1) {
@@ -74,3 +74,4 @@ class ObjCir extends ObjTemplate {
   }
 }
   
+

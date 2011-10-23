@@ -55,7 +55,6 @@ class GUICtrl {
     if (theEvent.isController()) {
       switch(theEvent.controller().id()) {
         case(2):
-          println("add HWObj");
           theHWList.add( new ObjHW(this));
           break;
         case(3):
@@ -91,9 +90,7 @@ class GUICtrl {
           break;
       }
     }
-    if (theEvent.isGroup() ) {
-      println("from group");
-    }    
   }
   
 }
+

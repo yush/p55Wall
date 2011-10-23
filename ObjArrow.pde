@@ -16,6 +16,7 @@ class ObjArrow extends ObjTemplate /*implements Comparable*/ {
     super.aController =  anObj.aController;
     center.x = (int)anObj.center.x;
     center.y = (int)anObj.center.y;
+    println("center "+center.toString());
     arrowSize = anObj.getObjSize();
   }
 
@@ -65,4 +66,5 @@ class ObjArrow extends ObjTemplate /*implements Comparable*/ {
   }
 
 }
+
 
