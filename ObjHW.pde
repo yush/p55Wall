@@ -6,6 +6,7 @@ class ObjHW {
   private int selectionWeight= 2;
   private int contourWeight= 10;
   
+  public GUICtrl theGUICtrl;
   public color objColor;
   //public boolean selected;
   public ObjTemplate theSelectedObj;
@@ -17,6 +18,7 @@ class ObjHW {
   public ArrayList nodeList;
   
   ObjHW(GUICtrl tGUICtrl) { 
+    theGUICtrl = tGUICtrl;
     ptrScreen = tGUICtrl.screenBuf;
     _backBuffer = tGUICtrl.backBuf;
     aController = tGUICtrl.ctrlControlP5;
@@ -63,18 +65,14 @@ class ObjHW {
   } 
   
   private ObjTemplate _isSelectedBackBuffer(int x, int y) {
-    color res;
+    theSelectedObj = null;
     drawObjInBuffer();
-    res = _backBuffer.get(x, y);
     //on parcourt la liste des composants
-    if ( head.isSelected(x,y) ) {
-      return head;
+    if ( head.isAtPos(x,y) ) {
+      theSelectedObj = head;
     }
-    else if (queue.isSelected()) {
-      return queue;
-    }
-    else {
-      return null;
+    else if (queue.isAtPos(x,y)) {
+      theSelectedObj = queue;
     }
     return theSelectedObj;
   }

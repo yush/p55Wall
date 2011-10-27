@@ -3,6 +3,9 @@ import controlP5.*;
 /*
  * TODO:
  * HW ou Obj possede methode qui retourne l'obj selectionne
+ * Fonctionnement: on demande à HWCollection s'il y a un objet sous le curseur
+ * Passe le relais à ObjHW qui parcours ses noeuds (head/queue)
+ * Le noeud determine s'il est de la hashColor qui correspond à la pos x,y dans le backbuffer 
  *  1. selection: 
  *  2. Multi-nodes
  *  3. Better XML
@@ -41,6 +44,7 @@ void draw() {
     anObj = (ObjHW)theHWList.get(i);
     anObj.drawObj();
   }
+  theHWList.drawObjInBuffer();
   image(backBuffer, 600, 0);
 }
 
@@ -48,15 +52,13 @@ void mousePressed() {
   ObjHW aHWObj;
   lPressed = true;
   int i;
-  /*
-  selectedObj = theHWList.getSelectedObject();
+  selectedObj = theHWList.getSelectedObject(mouseX, mouseY);
   if ( selectedObj != null ) {   
     selectedObj.loadParametersUI();
   }
   else {
     println("no selection");
   }
-  */
 }
 
 void mouseReleased() {

@@ -24,7 +24,7 @@ abstract class ObjTemplate implements Comparable {
   public void setObjColor(color aColor) {
     parent.objColor = aColor; 
   }
-  
+    
   //retourne le vecteur orthogonal a un vecteur definit par les 2 points en parametre
   protected PVector _getOrthogonalVector(PVector src, PVector dest) {
     float longueur;
@@ -93,22 +93,19 @@ abstract class ObjTemplate implements Comparable {
   }
   
   public void loadParametersUI() {
-     aController.controller("size").setValue(this.getObjSize());
-     aController.controller("red").setValue(red(parent.objColor));
-     aController.controller("green").setValue(green(parent.objColor));
-     aController.controller("blue").setValue(blue(parent.objColor));
+     parent.theGUICtrl.ctrlControlP5.controller("size").setValue(this.getObjSize());
+     parent.theGUICtrl.ctrlControlP5.controller("red").setValue(red(parent.objColor));
+     parent.theGUICtrl.ctrlControlP5.controller("green").setValue(green(parent.objColor));
+     parent.theGUICtrl.ctrlControlP5.controller("blue").setValue(blue(parent.objColor));
   }
   
-  public ObjTemplate isSelected() {
-    if ( color(head.id) == res ) {
-      head.isSelected = true;
-      theSelectedObj = head;
-      println("head selected");
+  public boolean isAtPos(int x, int y) {
+    color res;
+    res = parent.theGUICtrl.backBuf.get(x,y);
+    if (color(id) == res) {
+      println("obj selected");
+      return true;
     }
-    if ( color(queue.id) == res) {
-      queue.isSelected = true;
-      theSelectedObj = queue;
-      println("queue selected");
-    }
+    return false;
   }
 }

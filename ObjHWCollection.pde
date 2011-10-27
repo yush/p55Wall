@@ -20,26 +20,32 @@ class ObjHWCollection extends ArrayList {
   }
   
   public ObjTemplate getSelectedObject(int x, int y) {
-    ObjTemplate anObj;
+    ObjHW aHWObj;
+    ObjTemplate tObjSelected;
     int i;
     drawObjInBuffer();
-    res = tController.backBuf.get(x,y);
     for (i =0; i < theHWList.size(); i++ ) {
       aHWObj = (ObjHW)theHWList.get(i);
       println("==HWobj "+i);
-      if ( anObj.isSelected(mouseX,mouseY) != null ) {
+      tObjSelected = aHWObj.isSelected(mouseX,mouseY);
+      if ( tObjSelected != null ) {
         selectedObj = aHWObj.theSelectedObj;     
-        selectedObj.loadParametersUI();
-        return aObjHW;
+        //selectedObj.loadParametersUI();
+        return tObjSelected;
       }
+      /*
       else {
         aHWObj.setUnselected();
         return null;
       }
+      */
     }
+    return null;
   }
   
   public void drawObjInBuffer() {
+    int i;
+    ObjHW aHWObj;
     for (i =0; i < theHWList.size(); i++ ) {
       aHWObj = (ObjHW)theHWList.get(i);
       aHWObj.drawObjInBuffer();
